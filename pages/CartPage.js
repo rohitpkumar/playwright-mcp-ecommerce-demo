@@ -12,11 +12,21 @@ export class CartPage {
         // Cart icon used to navigate to Cart page
         this.cartIcon = page.locator(
             '[data-test="shopping-cart-link"]'
-);
-    }
+    );
+        // Checkout button used to start checkout flow
+        this.checkoutButton = page.locator('[data-test="checkout"]'
+    );
+}
 
     // Return cart product locator for assertions
     getCartProductName() {
         return this.cartProductName;
+    }
+
+    // Navigate to Checkout Information page
+    async openCheckout() {
+
+    // Click Checkout button
+    await this.checkoutButton.click();
     }
 }

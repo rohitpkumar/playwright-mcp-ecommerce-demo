@@ -21,6 +21,11 @@ export class InventoryPage {
     this.cartIcon = page.locator(
         '[data-test="shopping-cart-link"]'
     );
+
+    // Checkout button used to start checkout flow
+    this.checkoutButton = page.locator(
+    '[data-test="checkout"]'
+    );
     }
 
     // Return Products page title locator for assertions

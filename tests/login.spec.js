@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { CartPage } from '../pages/CartPage';
+import { CheckoutPage } from '../pages/CheckoutPage';
 
 test('Login with valid credentials', async ({ page }) => {
 
@@ -13,6 +14,9 @@ test('Login with valid credentials', async ({ page }) => {
 
     // Create Cart Page Object
     const cartPage = new CartPage(page);
+
+    // Create Checkout Page Object
+    const checkoutPage = new CheckoutPage(page);
 
     // Open SauceDemo login page
     console.log('STEP 1: Opening SauceDemo');
@@ -37,9 +41,41 @@ test('Login with valid credentials', async ({ page }) => {
     await inventoryPage.openCart();
 
     console.log('STEP 7: Verifying product in cart');
+
     await expect(
     cartPage.getCartProductName()
         ).toHaveText('Sauce Labs Bike Light');
+
+    console.log('STEP 8: Opening Checkout page');
+    await cartPage.openCheckout();
+
+    console.log('STEP 9: Verifying Checkout page');
+    await expect(
+    checkoutPage.getCheckoutTitle()).toHaveText('Checkout: Your Information');
+
+    console.log('STEP 10: Filling checkout information');
+
+    await checkoutPage.fillCheckoutInformation(
+    'Rohit',
+    'Kumar',
+    '400001'
+);
+
+    console.log('STEP 11: Continuing checkout');
+    await checkoutPage.continueCheckout();
+
+    console.log('STEP 12: Verifying Checkout Overview page');
+
+    await expect(
+        checkoutPage.getCheckoutOverviewTitle()).toHaveText('Checkout: Overview');
+
+    console.log('STEP 13: Finishing checkout');
+    await checkoutPage.finishCheckout();
+
+    console.log('STEP 14: Verifying order confirmation');
+
+    await expect(
+    checkoutPage.getOrderConfirmationMessage()).toHaveText('Thank you for your order!');
 
     console.log('TEST PASSED');
 });
