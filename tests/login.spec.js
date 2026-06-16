@@ -4,7 +4,7 @@ import { InventoryPage } from '../pages/InventoryPage';
 import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
 
-test('Login with valid credentials', async ({ page }) => {
+test('Complete purchase flow', async ({ page }) => {
 
     // Create Page Object instance and pass Playwright page object
     const loginPage = new LoginPage(page);
