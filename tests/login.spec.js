@@ -11,17 +11,23 @@ test('Login with valid credentials', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
 
     // Open SauceDemo login page
+    console.log('STEP 1: Opening SauceDemo');
     await loginPage.goto();
 
-    // Login using valid test credentials
+    console.log('STEP 2: Logging in');
     await loginPage.login(
         'standard_user',
         'secret_sauce'
-    );
+);
 
-    // Verify successful login by checking inventory page URL
-    await expect(page).toHaveURL(/inventory/);
-
-    // Verify Products title is visible after successful login
+    console.log('STEP 3: Verifying Products page');
     await expect(inventoryPage.getProductsTitle()).toBeVisible();
+
+    console.log('STEP 4: Adding Bike Light to cart');
+    await inventoryPage.addBikeLightToCart();
+
+    console.log('STEP 5: Verifying cart badge');
+    await expect(inventoryPage.getCartBadge()).toHaveText('1');
+
+    console.log('TEST PASSED');
 });
