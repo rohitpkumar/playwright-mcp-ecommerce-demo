@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
+import { CartPage } from '../pages/CartPage';
 
 test('Login with valid credentials', async ({ page }) => {
 
@@ -9,6 +10,9 @@ test('Login with valid credentials', async ({ page }) => {
 
     // Create Inventory Page Object
     const inventoryPage = new InventoryPage(page);
+
+    // Create Cart Page Object
+    const cartPage = new CartPage(page);
 
     // Open SauceDemo login page
     console.log('STEP 1: Opening SauceDemo');
@@ -28,6 +32,14 @@ test('Login with valid credentials', async ({ page }) => {
 
     console.log('STEP 5: Verifying cart badge');
     await expect(inventoryPage.getCartBadge()).toHaveText('1');
+
+    console.log('STEP 6: Opening Cart page');
+    await inventoryPage.openCart();
+
+    console.log('STEP 7: Verifying product in cart');
+    await expect(
+    cartPage.getCartProductName()
+        ).toHaveText('Sauce Labs Bike Light');
 
     console.log('TEST PASSED');
 });

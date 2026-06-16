@@ -2,19 +2,26 @@ export class InventoryPage {
     constructor(page) {
 
         // Store Playwright page object
-        this.page = page;
+    this.page = page;
 
-        // Inventory page title displayed after successful login
-        this.productsTitle = page.locator('.title');
+    // Inventory page title displayed after successful login
+    this.productsTitle = page.locator('.title');
 
-        // Add To Cart button for Sauce Labs Bike Light
-        this.bikeLightAddToCartButton = page.locator(
-            '[data-test="add-to-cart-sauce-labs-bike-light"]');
+    // Add To Cart button for Sauce Labs Bike Light
+    this.bikeLightAddToCartButton = page.locator(
+        '[data-test="add-to-cart-sauce-labs-bike-light"]'
+    );
 
-        // Cart badge showing number of items added to cart
-        this.cartBadge = page.locator(
-            '[data-test="shopping-cart-badge"]');
-}
+    // Cart badge showing number of items added to cart
+    this.cartBadge = page.locator(
+        '[data-test="shopping-cart-badge"]'
+    );
+
+    // Cart icon used to navigate to Cart page
+    this.cartIcon = page.locator(
+        '[data-test="shopping-cart-link"]'
+    );
+    }
 
     // Return Products page title locator for assertions
     getProductsTitle() {
@@ -30,5 +37,12 @@ export class InventoryPage {
     // Return cart badge locator for assertions
     getCartBadge() {
         return this.cartBadge;
-}
+    }
+
+    // Navigate to Cart page
+        async openCart() {
+
+        // Click cart icon
+        await this.cartIcon.click();
+        }
 }
