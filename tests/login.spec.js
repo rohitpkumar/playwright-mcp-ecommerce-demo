@@ -19,63 +19,80 @@ test('Complete purchase flow', async ({ page }) => {
     const checkoutPage = new CheckoutPage(page);
 
     // Open SauceDemo login page
-    console.log('STEP 1: Opening SauceDemo');
+    await test.step('Open SauceDemo', async () => {
     await loginPage.goto();
+});
 
-    console.log('STEP 2: Logging in');
+    await test.step('Login with valid credentials', async () => {
     await loginPage.login(
         'standard_user',
         'secret_sauce'
-);
+    );
+});
 
-    console.log('STEP 3: Verifying Products page');
-    await expect(inventoryPage.getProductsTitle()).toBeVisible();
+    await test.step('Verify Products page', async () => {
+    await expect(
+        inventoryPage.getProductsTitle()
+    ).toBeVisible();
+});
 
-    console.log('STEP 4: Adding Bike Light to cart');
+    await test.step('Add Bike Light to cart', async () => {
     await inventoryPage.addBikeLightToCart();
+});
 
-    console.log('STEP 5: Verifying cart badge');
-    await expect(inventoryPage.getCartBadge()).toHaveText('1');
+    await test.step('Verify cart badge', async () => {
+    await expect(
+        inventoryPage.getCartBadge()
+    ).toHaveText('1');
+});
 
-    console.log('STEP 6: Opening Cart page');
+    await test.step('Open Cart page', async () => {
     await inventoryPage.openCart();
+});
 
-    console.log('STEP 7: Verifying product in cart');
-
+    await test.step('Verify product in cart', async () => {
     await expect(
-    cartPage.getCartProductName()
-        ).toHaveText('Sauce Labs Bike Light');
+        cartPage.getCartProductName()
+    ).toHaveText('Sauce Labs Bike Light');
+});
 
-    console.log('STEP 8: Opening Checkout page');
+    await test.step('Open Checkout page', async () => {
     await cartPage.openCheckout();
+});
 
-    console.log('STEP 9: Verifying Checkout page');
+    await test.step('Verify Checkout page', async () => {
     await expect(
-    checkoutPage.getCheckoutTitle()).toHaveText('Checkout: Your Information');
+        checkoutPage.getCheckoutTitle()
+    ).toHaveText('Checkout: Your Information');
+});
 
-    console.log('STEP 10: Filling checkout information');
-
+    await test.step('Fill checkout information', async () => {
     await checkoutPage.fillCheckoutInformation(
-    'Rohit',
-    'Kumar',
-    '400001'
-);
+        'Rohit',
+        'Kumar',
+        '400001'
+    );
+});
 
-    console.log('STEP 11: Continuing checkout');
+await test.step('Continue checkout', async () => {
     await checkoutPage.continueCheckout();
+});
 
-    console.log('STEP 12: Verifying Checkout Overview page');
-
+    await test.step('Verify Checkout Overview page', async () => {
     await expect(
-        checkoutPage.getCheckoutOverviewTitle()).toHaveText('Checkout: Overview');
+        checkoutPage.getCheckoutOverviewTitle()
+    ).toHaveText('Checkout: Overview');
+});
 
-    console.log('STEP 13: Finishing checkout');
+    await test.step('Finish checkout', async () => {
     await checkoutPage.finishCheckout();
+});
 
-    console.log('STEP 14: Verifying order confirmation');
-
+    await test.step('Verify order confirmation', async () => {
     await expect(
-    checkoutPage.getOrderConfirmationMessage()).toHaveText('Thank you for your order!');
-
-    console.log('TEST PASSED');
+        checkoutPage.getOrderConfirmationMessage()
+    ).toHaveText('Thank you for your order!');
+});
+    
+//console.log('TEST PASSED');
 });
