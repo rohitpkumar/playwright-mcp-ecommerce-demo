@@ -3,6 +3,7 @@ import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
+import { checkoutData } from '../test-data/checkoutData';
 
 test('Complete purchase flow', async ({ page }) => {
 
@@ -25,8 +26,8 @@ test('Complete purchase flow', async ({ page }) => {
 
     await test.step('Login with valid credentials', async () => {
     await loginPage.login(
-        'standard_user',
-        'secret_sauce'
+        checkoutData.username,
+        checkoutData.password
     );
 });
 
@@ -68,9 +69,9 @@ test('Complete purchase flow', async ({ page }) => {
 
     await test.step('Fill checkout information', async () => {
     await checkoutPage.fillCheckoutInformation(
-        'Rohit',
-        'Kumar',
-        '400001'
+        checkoutData.firstName,
+        checkoutData.lastName,
+        checkoutData.postalCode
     );
 });
 
